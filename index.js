@@ -1,13 +1,16 @@
 const mongoose = require("mongoose");
 const express = require('express');
-const app = express();
+const CryptoJS = require("crypto-js");
 const idgen = require("./util/idgen");
+
+const pastes = require("./routes/pastes");
 
 const Paste = require("./model/Paste");
 
 const port = 3000;
 
-app.use(express.json());
+const app = express();
+app.use(express.json({limit: '50mb'}));
 
 main().catch(err => console.error(err));
 
@@ -22,33 +25,12 @@ app.get('/', (req, res) => {
   res.send('Hello World!')
 });
 
-app.get("/:action?/:pasteId", async (req, res) => {
-  const pasteId = req.params.pasteId;
-  const action = req.params.action;
-  const paste = await Paste.findById(pasteId).exec();
-
-  if (paste != null) {
-    if(action === "raw") {
-      res.send(paste.content);
-    } else if(action == "dl") {
-      res.attachment(`${pasteId}.txt`);
-      res.type("txt");
-      res.send(paste.content);
-    } else if(action == "json") {
-      res.type("json");
-      res.send(paste);
-    } else {
-      res.send(paste);
-    }
-  } else {
-    res.status(404).send("404: Not found");
-  }
-});
-
 app.post("/new", async (req, res) => {
   const body = req.body;
   const name = body.name;
   const content = body.content;
+
+  const security = body.security;
 
   const newPaste = new Paste({
     name: name,
@@ -68,8 +50,25 @@ app.post("/new", async (req, res) => {
     return;
   }
 
+  if(security) {
+    if(security.type === "AES") {
+      const encrypted = CryptoJS.AES.encrypt(content, security.passphrase).toString();
+      const hmac = CryptoJS.HmacSHA256(encrypted, CryptoJS.SHA256(security.passphrase)).toString();
+
+      newPaste.content = encrypted;
+
+      newPaste.security = {
+        type: "AES",
+        hmac: hmac
+      };
+    }
+  }
+
   newPaste._id = await idgen.defaultGenId();
 
   await newPaste.save();
   res.send(newPaste);
 });
+
+app.get("/:action?/:pasteId", pastes.retrieve);
+app.post("/:action?/:pasteId", pastes.retrieve);

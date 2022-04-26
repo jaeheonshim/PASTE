@@ -10,6 +10,10 @@ const pasteSchema = new mongoose.Schema({
     content: {
         type: String,
         minlength: [1, "Content must be present"]
+    },
+    security: {
+        type: Object,
+        default: null
     }
 });
 
