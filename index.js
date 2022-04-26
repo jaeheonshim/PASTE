@@ -18,17 +18,22 @@ app.get('/', (req, res) => {
   res.send('Hello World!')
 });
 
-app.get("/:pasteId", async (req, res) => {
-  try {
-    const pasteId = req.params.pasteId;
-    const pasteArray = await Paste.find({_id: pasteId});
+app.get("/:action?/:pasteId", async (req, res) => {
+  const pasteId = req.params.pasteId;
+  const action = req.params.action;
+  const paste = await Paste.findById(pasteId).exec();
 
-    if(pasteArray.length <= 0) {
-        res.status(404).send();
+  if (paste != null) {
+    if(action === "raw") {
+      res.send(paste.content);
+    } else if(action == "dl") {
+      res.attachment(`${pasteId}.txt`);
+      res.type("txt");
+      res.send(paste.content);
     } else {
-        res.send(pasteArray[0]);
+      res.send(paste);
     }
-  } catch(error) {
-    return next()
+  } else {
+    res.status(404).send("404: Not found");
   }
 });
