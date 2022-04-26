@@ -12,8 +12,8 @@ const pasteSchema = new mongoose.Schema({
         minlength: [1, "Content must be present"]
     },
     security: {
-        type: Object,
-        default: null
+        type: {type: String, select: true},
+        hmac: {type: String, select: false}
     }
 });
 
