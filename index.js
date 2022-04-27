@@ -12,8 +12,8 @@ const port = 3000;
 const app = express();
 
 app.use(express.static('public'))
-app.use(express.json({limit: '50mb'}));
-app.use(bodyParser.urlencoded({ extended: true })); 
+app.use(express.json({limit: '16mb'}));
+app.use(bodyParser.urlencoded({ extended: true, limit: '16mb'})); 
 
 app.set('views', './views');
 app.set('view engine', 'ejs');
