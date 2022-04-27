@@ -13,7 +13,8 @@ const pasteSchema = new mongoose.Schema({
     },
     security: {
         type: {type: String, select: true},
-        hmac: {type: String, select: false}
+        hmac: {type: String, select: false},
+        passphrase: {type: String, select: false}
     }
 });
 

@@ -1,5 +1,8 @@
 const AES = require("crypto-js/aes");
 const CryptoJS = require("crypto-js");
+const bcrypt = require('bcrypt');
+const saltRounds = 10;
+
 const idgen = require("../util/idgen");
 
 const Paste = require("../model/Paste");
@@ -27,6 +30,14 @@ exports.retrieve = async (req, res) => {
                 if(decrypted) {
                     paste.content = decrypted;
                 } else {
+                    res.status(403).send("Incorrect passphrase");
+                    return;
+                }
+            } else {
+                const truePassphrase = (await Paste.findById(paste._id).select({ "security.passphrase": 1 }).exec()).security.passphrase;
+                
+                if(!(await bcrypt.compare(passphrase, truePassphrase))) {
+                    paste.content = "";
                     res.status(403).send("Incorrect passphrase");
                     return;
                 }
@@ -88,6 +99,13 @@ exports.new = async (req, res) => {
             newPaste.security = {
                 type: "AES",
                 hmac: hmac
+            };
+        } else {
+            const hashedPass = await bcrypt.hash(passphrase, saltRounds);
+
+            newPaste.security = {
+                type: "passphrase",
+                passphrase: hashedPass
             };
         }
     }
