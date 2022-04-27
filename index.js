@@ -3,8 +3,6 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const CryptoJS = require("crypto-js");
 
-const idgen = require("./util/idgen");
-
 const pastes = require("./routes/pastes");
 
 const Paste = require("./model/Paste");
@@ -12,6 +10,8 @@ const Paste = require("./model/Paste");
 const port = 3000;
 
 const app = express();
+
+app.use(express.static('public'))
 app.use(express.json({limit: '50mb'}));
 app.use(bodyParser.urlencoded({ extended: true })); 
 
@@ -27,6 +27,9 @@ async function main() {
   });
 }
 
+app.get("/new", (req, res) => {
+  res.render("pages/new");
+});
 app.post("/new", pastes.new);
 app.get("/:action?/:pasteId", pastes.retrieve);
 app.post("/:action?/:pasteId", pastes.retrieve);

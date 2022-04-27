@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <%- include("../partials/head"); %>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+</head>
+
+<body>
+    <div class="container-fluid">
+        <form action="/new" method="post">
+            <h5>Paste Options</h5>
+            <div class="mb-3">
+                <label for="pasteName" class="form-label">Paste Name/Title</label>
+                <input type="text" class="form-control" id="pasteName" name="name">
+            </div>
+            <div class="mb-3">
+                <label for="pasteContent" class="form-label">Content</label>
+                <textarea class="form-control" id="pasteContent" rows="7" name="content"></textarea>
+            </div>
+            <div class="form-check mb-3">
+                <input class="form-check-input" type="checkbox" value="true" name="security" id="enableSecurity">
+                <label class="form-check-label" for="enableSecurity">
+                    Enable security
+                </label>
+            </div>
+            <div id="securityOptions" class="mb-3">
+                <h5>Security Options</h5>
+                <div class="mb-3">
+                    <label for="pastePassword" class="form-label" name="passphrase">Password</label>
+                    <input type="password" class="form-control" id="pastePassword" name="passphrase">
+                    <div class="form-text text-danger">You will be unable to access your paste if your forget your
+                        password!</div>
+                </div>
+                <div class="form-check mb-3">
+                    <input class="form-check-input" type="checkbox" value="true" id="enableAES" name="AES">
+                    <label class="form-check-label" for="enableAES">
+                        Enable AES Encryption
+                    </label>
+                    <small class="text-secondary" data-bs-toggle="tooltip" data-bs-placement="top" title="Enabling AES encryption will store your pastes in an encrypted form, so that nobody (even the server) can see the contents of your paste without the password. Although this option is more secure, it can lead to longer paste access times.">
+                        Learn more
+                    </small>
+                </div>
+            </div>
+            <hr>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+        <script src="/js/new.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+            crossorigin="anonymous"></script>
+    </div>
+</body>
+
+</html>

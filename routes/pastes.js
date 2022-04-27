@@ -1,5 +1,6 @@
 const AES = require("crypto-js/aes");
 const CryptoJS = require("crypto-js");
+const idgen = require("../util/idgen");
 
 const Paste = require("../model/Paste");
 
@@ -13,7 +14,7 @@ exports.retrieve = async (req, res) => {
             const passphrase = req.body.passphrase;
             if (!passphrase) {
                 if (req.method == "GET") {
-                    res.render("pages/password", { pasteId: pasteId });
+                    res.render("pages/password", { pasteId: pasteId, action: (action || "") });
                 } else {
                     res.status(403).send("You are not allowed to access this paste.");
                 }
@@ -42,6 +43,7 @@ exports.retrieve = async (req, res) => {
             res.type("json");
             res.send(paste);
         } else {
+            res.type("json");
             res.send(paste);
         }
     } else {
@@ -55,6 +57,8 @@ exports.new = async (req, res) => {
     const content = body.content;
 
     const security = body.security;
+    const passphrase = body.passphrase;
+    const aes = body.AES;
 
     const newPaste = new Paste({
         name: name,
@@ -75,9 +79,9 @@ exports.new = async (req, res) => {
     }
 
     if (security) {
-        if (security.type === "AES") {
-            const encrypted = CryptoJS.AES.encrypt(content, security.passphrase).toString();
-            const hmac = CryptoJS.HmacSHA256(encrypted, CryptoJS.SHA256(security.passphrase)).toString();
+        if (aes) {
+            const encrypted = CryptoJS.AES.encrypt(content, passphrase).toString();
+            const hmac = CryptoJS.HmacSHA256(encrypted, CryptoJS.SHA256(passphrase)).toString();
 
             newPaste.content = encrypted;
 
