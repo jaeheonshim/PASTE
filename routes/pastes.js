@@ -30,7 +30,7 @@ exports.retrieve = async (req, res) => {
                 if(decrypted) {
                     paste.content = decrypted;
                 } else {
-                    res.status(403).send("Incorrect passphrase");
+                    onIncorrectPassphrase(req, res);
                     return;
                 }
             } else {
@@ -38,7 +38,7 @@ exports.retrieve = async (req, res) => {
                 
                 if(!(await bcrypt.compare(passphrase, truePassphrase))) {
                     paste.content = "";
-                    res.status(403).send("Incorrect passphrase");
+                    onIncorrectPassphrase(req, res);
                     return;
                 }
             }
@@ -126,3 +126,10 @@ const handleAESDecrypt = async (paste, passphrase) => {
     const decrypted = AES.decrypt(paste.content, passphrase).toString(CryptoJS.enc.Utf8);
     return decrypted;
 };
+
+const onIncorrectPassphrase = async (req, res) => {
+    const pasteId = req.params.pasteId;
+    const action = req.params.action;
+
+    res.status(403).render("pages/password", { pasteId: pasteId, error: "Incorrect passphrase", action: (action || "") });
+}
