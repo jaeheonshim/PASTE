@@ -16,7 +16,7 @@ const pasteSchema = new mongoose.Schema({
         hmac: {type: String, select: false},
         passphrase: {type: String, select: false}
     }
-});
+}, { timestamps: true });
 
 const Paste = mongoose.model("Paste", pasteSchema);
 

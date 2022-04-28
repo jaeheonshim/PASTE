@@ -11,7 +11,8 @@
 <body>
     <div class="card">
         <div class="card-body">
-            <h1 class="h3 mb-2"><%= paste.name %></h1>
+            <h1 class="h3 mb-0"><%= paste.name %></h1>
+            <div class="mb-2"><i class="fas fa-calendar-alt"></i> <%= paste.createdAt %></div>
             <div class="mb-2 row justify-content-between">
                 <div class="col">
                     <a href="/raw/<%=paste.id%>" class="btn btn-dark btn-sm">RAW</a>
