@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <%- include("../partials/head"); %>
+    <title>
+        <%= paste.name %>
+    </title>
+</head>
+
+<body>
+    <div class="card">
+        <div class="card-body">
+            <h1 class="h3 mb-2"><%= paste.name %></h1>
+            <div class="mb-2 row justify-content-between">
+                <div class="col">
+                    <a href="/raw/<%=paste.id%>" class="btn btn-dark btn-sm">RAW</a>
+                    <a href="/json/<%=paste.id%>" class="btn btn-dark btn-sm">JSON</a>
+                    <a href="/dl/<%=paste.id%>" class="btn btn-dark btn-sm">DOWNLOAD</a>
+                </div>
+                <div class="col text-end">
+                    <% if(paste.security.type != null) { %>
+                        <span class="badge bg-success"><i class="fa fa-solid fa-lock"></i></span>
+                        <% if(paste.security.type === "AES") { %>
+                            <span class="badge bg-warning">AES-256</span>
+                        <% } %>
+                    <% } %>
+                </div>
+            </div>
+            <textarea class="form-control" style="resize: none;" readonly><%- paste.content %></textarea>
+        </div>
+    </div>
+    <script src="/js/paste.js"></script>
+</body>
+</html>

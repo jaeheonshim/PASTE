@@ -13,7 +13,7 @@ exports.retrieve = async (req, res) => {
     const paste = await Paste.findById(pasteId).exec();
 
     if (paste != null) {
-        if (paste.security) {
+        if (paste.security.type != null) {
             const passphrase = req.body.passphrase;
             if (!passphrase) {
                 if (req.method == "GET") {
@@ -54,8 +54,7 @@ exports.retrieve = async (req, res) => {
             res.type("json");
             res.send(paste);
         } else {
-            res.type("json");
-            res.send(paste);
+            res.render("pages/paste", {paste: paste});
         }
     } else {
         res.status(404).send("404: Not found");
