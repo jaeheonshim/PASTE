@@ -13,6 +13,12 @@ exports.retrieve = async (req, res) => {
     const paste = await Paste.findById(pasteId).exec();
 
     if (paste != null) {
+        if(paste.isExpired()) {
+            res.status(404).send("404: Not found");
+            await Paste.deleteOne({_id: pasteId});
+            return;
+        }
+
         if (paste.security.type != null) {
             const passphrase = req.body.passphrase;
             if (!passphrase) {
@@ -120,7 +126,7 @@ exports.new = async (req, res) => {
     newPaste._id = await idgen.defaultGenId();
 
     await newPaste.save();
-    res.send(newPaste);
+    res.render("pages/paste", {paste: newPaste});
 };
 
 const handleAESDecrypt = async (paste, passphrase) => {

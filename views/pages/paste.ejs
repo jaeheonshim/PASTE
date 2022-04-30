@@ -40,7 +40,7 @@
                         if(days > 0) diffText.push(`${days} day${days > 1 ? "s" : ""}`);
                         if(hours > 0) diffText.push(`${hours} hour${hours > 1 ? "s" : ""}`);
                         if(minutes > 0) diffText.push(`${minutes} minute${minutes > 1 ? "s" : ""}`);
-
+                        if(days <= 0 && hours <= 0 && minutes <= 0) diffText.push("A few seconds");
                         const diffString = diffText.join(", ");
                     %>
                         <span class="badge bg-warning"><i class="fa fa-regular fa-hourglass-half"></i> <%= diffString %></span>
