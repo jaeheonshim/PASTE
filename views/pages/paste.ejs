@@ -21,9 +21,11 @@
                 </div>
                 <div class="col text-end">
                     <% if(paste.security.type != null) { %>
-                        <span class="badge bg-success"><i class="fa fa-solid fa-lock"></i></span>
+                        <span class="badge bg-success" data-bs-toggle="tooltip" data-bs-placement="top" title="Password protected">
+                            <i class="fa fa-solid fa-lock"></i>
+                        </span>
                         <% if(paste.security.type === "AES") { %>
-                            <span class="badge bg-warning">AES-256</span>
+                            <span class="badge bg-warning" data-bs-toggle="tooltip" data-bs-placement="top" title="Encrypted">AES-256</span>
                         <% } %>
                     <% } %>
                 </div>

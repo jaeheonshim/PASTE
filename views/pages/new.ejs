@@ -37,10 +37,25 @@
                     <label class="form-check-label" for="enableAES">
                         Enable AES Encryption
                     </label>
-                    <small class="text-secondary" data-bs-toggle="tooltip" data-bs-placement="top" title="Enabling AES encryption will store your pastes in an encrypted form, so that nobody (even the server) can see the contents of your paste without the password. Although this option is more secure, it can lead to longer paste access times.">
+                    <small class="text-secondary" data-bs-toggle="tooltip" data-bs-placement="top"
+                        title="Enabling AES encryption will store your pastes in an encrypted form, so that nobody (even the server) can see the contents of your paste without the password. Although this option is more secure, it can lead to longer paste access times.">
                         Learn more
                     </small>
                 </div>
+            </div>
+            <div class="mb-3">
+                <label for="expiration" class="form-label">Expiration</label>
+                <select class="form-select" aria-label="Paste expiration" name="expiration">
+                    <option value="" selected>Never</option>
+                    <option value="10m">10 Minutes</option>
+                    <option value="1h">1 Hour</option>
+                    <option value="1d">1 Day</option>
+                    <option value="1w">1 Week</option>
+                    <option value="2w">2 Weeks</option>
+                    <option value="1m">1 Month</option>
+                    <option value="6m">6 Months</option>
+                    <option value="1y">1 Year</option>
+                </select>
             </div>
             <hr>
             <button type="submit" class="btn btn-primary">Submit</button>

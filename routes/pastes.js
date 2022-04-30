@@ -65,6 +65,7 @@ exports.new = async (req, res) => {
     const body = req.body;
     const name = body.name;
     const content = body.content;
+    const expiration = body.expiration;
 
     const security = body.security;
     const passphrase = body.passphrase;
@@ -109,6 +110,12 @@ exports.new = async (req, res) => {
         }
     }
 
+    if(expiration) {
+        const expirationDate = new Date();
+
+        addToDate(expiration, expirationDate);
+    }
+
     newPaste._id = await idgen.defaultGenId();
 
     await newPaste.save();
@@ -132,3 +139,29 @@ const onIncorrectPassphrase = async (req, res) => {
 
     res.status(403).render("pages/password", { pasteId: pasteId, error: "Incorrect passphrase", action: (action || "") });
 }
+
+const addToDate = (period, date) => {
+    const data = parseInt(period);
+    const specifier = period.replace(/[^a-z]/gi, '').trim();
+
+    switch(specifier) {
+        case "m":
+            date.setMinutes(date.getMinutes() + data);
+            break;
+        case "h":
+            date.setHours(date.getHours() + data);
+            break;
+        case "d":
+            date.setDays(date.getDays() + data);
+            break;
+        case "w":
+            date.setDays(date.getDays() + data * 7);
+            break;
+        case "m":
+            date.setMonths(date.getMonths() + data);
+            break;
+        case "y":
+            date.setFullYear(date.getFullYear() + data);
+            break;
+    }
+};
