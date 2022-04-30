@@ -1,0 +1,42 @@
+<div class="card">
+  <div class="card-body">
+    <h1 class="h3 mb-0"><%= paste.name %></h1>
+    <div class="mb-2"><i class="fas fa-calendar-alt"></i> <%= paste.createdAt %></div>
+    <div class="mb-2 row justify-content-between">
+      <div class="col">
+        <a href="/raw/<%=paste.id%>" class="btn btn-dark btn-sm">RAW</a>
+        <a href="/json/<%=paste.id%>" class="btn btn-dark btn-sm">JSON</a>
+        <a href="/dl/<%=paste.id%>" class="btn btn-dark btn-sm">DOWNLOAD</a>
+      </div>
+      <div class="col text-end">
+        <% if(paste.security.type != null) { %>
+        <span class="badge bg-success" data-bs-toggle="tooltip" data-bs-placement="top" title="Password protected">
+          <i class="fa fa-solid fa-lock"></i>
+        </span>
+        <% if(paste.security.type === "AES") { %>
+        <span class="badge bg-warning" data-bs-toggle="tooltip" data-bs-placement="top" title="Encrypted">AES-256</span>
+        <% } %>
+        <% } %>
+        <% if(paste.expiration != null) { 
+            const diffTime = paste.expiration - new Date();
+            const days = Math.floor(diffTime / (24 * 60 * 60 * 1000));
+            const daysms = diffTime % (24 * 60 * 60 * 1000);
+            const hours = Math.floor(daysms / (60 * 60 * 1000));
+            const hoursms = diffTime % (60 * 60 * 1000);
+            const minutes = Math.floor(hoursms / (60 * 1000));
+
+            const diffText = [];
+            if(days > 0) diffText.push(`${days} day${days > 1 ? "s" : ""}`);
+            if(hours > 0) diffText.push(`${hours} hour${hours > 1 ? "s" : ""}`);
+            if(minutes > 0) diffText.push(`${minutes} minute${minutes > 1 ? "s" : ""}`);
+            if(days <= 0 && hours <= 0 && minutes <= 0) diffText.push("A few seconds");
+            const diffString = diffText.join(", ");
+                %>
+        <span class="badge bg-warning"><i class="fa fa-regular fa-hourglass-half"></i> <%= diffString %></span>
+        <% } %>
+      </div>
+    </div>
+    <textarea class="form-control" style="resize: none;" readonly><%- paste.content %></textarea>
+  </div>
+</div>
+<script src="/js/paste.js"></script>

@@ -1,0 +1,55 @@
+<div class="p-3 container-fluid bg-dark">
+    <form action="/new" method="post">
+        <h5>Paste Options</h5>
+        <div class="mb-3">
+            <label for="pasteName" class="form-label">Paste Name/Title</label>
+            <input type="text" class="form-control" id="pasteName" name="name" required>
+        </div>
+        <div class="mb-3">
+            <label for="pasteContent" class="form-label">Content</label>
+            <textarea class="form-control" id="pasteContent" rows="7" name="content" required></textarea>
+        </div>
+        <div class="form-check mb-3">
+            <input class="form-check-input" type="checkbox" value="true" name="security" id="enableSecurity">
+            <label class="form-check-label" for="enableSecurity">
+                Enable security
+            </label>
+        </div>
+        <div id="securityOptions" class="mb-3">
+            <h5>Security Options</h5>
+            <div class="mb-3">
+                <label for="pastePassword" class="form-label" name="passphrase">Password</label>
+                <input type="password" class="form-control" id="pastePassword" name="passphrase">
+                <div class="form-text text-danger">You will be unable to access your paste if your forget your
+                    password!</div>
+            </div>
+            <div class="form-check mb-3">
+                <input class="form-check-input" type="checkbox" value="true" id="enableAES" name="AES">
+                <label class="form-check-label" for="enableAES">
+                    Enable AES Encryption
+                </label>
+                <small class="text-secondary" data-bs-toggle="tooltip" data-bs-placement="top"
+                    title="Enabling AES encryption will store your pastes in an encrypted form, so that nobody (even the server) can see the contents of your paste without the password. Although this option is more secure, it can lead to longer paste access times.">
+                    Learn more
+                </small>
+            </div>
+        </div>
+        <div class="mb-3">
+            <label for="expiration" class="form-label">Expiration</label>
+            <select class="form-select" aria-label="Paste expiration" name="expiration">
+                <option value="" selected>Never</option>
+                <option value="10m">10 Minutes</option>
+                <option value="1h">1 Hour</option>
+                <option value="1d">1 Day</option>
+                <option value="1w">1 Week</option>
+                <option value="2w">2 Weeks</option>
+                <option value="1mo">1 Month</option>
+                <option value="6m">6 Months</option>
+                <option value="1y">1 Year</option>
+            </select>
+        </div>
+        <hr>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+    <script src="/js/new.js"></script>
+</div>

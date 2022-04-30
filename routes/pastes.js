@@ -126,7 +126,7 @@ exports.new = async (req, res) => {
     newPaste._id = await idgen.defaultGenId();
 
     await newPaste.save();
-    res.render("pages/paste", {paste: newPaste});
+    res.redirect("/" + newPaste._id);
 };
 
 const handleAESDecrypt = async (paste, passphrase) => {
