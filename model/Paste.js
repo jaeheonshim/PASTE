@@ -15,8 +15,14 @@ const pasteSchema = new mongoose.Schema({
         type: {type: String, select: true},
         hmac: {type: String, select: false},
         passphrase: {type: String, select: false}
-    }
+    },
+    expiration: Date
 }, { timestamps: true });
+
+pasteSchema.methods.isExpired = function() {
+    const today = new Date();
+    return today > this.expiration;
+}
 
 const Paste = mongoose.model("Paste", pasteSchema);
 

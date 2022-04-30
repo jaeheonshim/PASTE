@@ -114,6 +114,7 @@ exports.new = async (req, res) => {
         const expirationDate = new Date();
 
         addToDate(expiration, expirationDate);
+        newPaste.expiration = expirationDate;
     }
 
     newPaste._id = await idgen.defaultGenId();
@@ -152,12 +153,12 @@ const addToDate = (period, date) => {
             date.setHours(date.getHours() + data);
             break;
         case "d":
-            date.setDays(date.getDays() + data);
+            date.setDate(date.getDate() + data)
             break;
         case "w":
-            date.setDays(date.getDays() + data * 7);
+            date.setDate(date.getDate() + data * 7)
             break;
-        case "m":
+        case "mo":
             date.setMonths(date.getMonths() + data);
             break;
         case "y":
