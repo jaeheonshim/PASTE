@@ -61,7 +61,7 @@ exports.retrieve = async (req, res, next) => {
             res.type("json");
             res.send(paste);
         } else {
-            res.render("pages/paste", {paste: paste});
+            res.render("pages/paste", {paste: paste, base64: Buffer.from(paste.content).toString("base64")});
         }
     } else {
         res.status(404).render("pages/404");
