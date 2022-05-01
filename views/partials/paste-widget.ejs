@@ -1,3 +1,7 @@
+<link rel="stylesheet" href="/css/paste.css">
+<script>
+  const pasteContent = `<%- paste.content %>`;
+</script>
 <div class="card">
   <div class="card-body">
     <h1 class="h3 mb-0"><%= paste.name %></h1>
@@ -7,12 +11,18 @@
         <a href="/raw/<%=paste.id%>" class="btn btn-dark btn-sm">RAW</a>
         <a href="/json/<%=paste.id%>" class="btn btn-dark btn-sm">JSON</a>
         <a href="/dl/<%=paste.id%>" class="btn btn-dark btn-sm">DOWNLOAD</a>
+        <% if(paste.language === "markdown") { %>
+        <div class="btn-group ms-2" role="group" aria-label="Paste display mode">
+          <button id="display-md" type="button" class="btn btn-outline-primary btn-sm active" aria-label="Markdown"><i class="fa-solid fa-book"></i></button>
+          <button id="display-code" type="button" class="btn btn-outline-primary btn-sm" aria-label="Code"><i class="fa-solid fa-code"></i></button>
+        </div>
+        <% } %>
       </div>
       <div class="col text-end">
         <% if(paste.language && paste.language != "txt") { %>
-          <span class="badge bg-primary">
-            <%= paste.language %>
-          </span>
+        <span class="badge bg-primary">
+          <%= paste.language %>
+        </span>
         <% } %>
         <% if(paste.security.type != null) { %>
         <span class="badge bg-success" data-bs-toggle="tooltip" data-bs-placement="top" title="Password protected">
@@ -41,7 +51,19 @@
         <% } %>
       </div>
     </div>
-    <pre><code class='language-<%= paste.language %>' style="resize: none;" readonly><%= paste.content %></code></pre>
+    <div id="content">
+      <pre><code class='language-<%= paste.language %>' style="resize: none;" readonly><%= paste.content %></code></pre>
+    </div>
+
+    <% if(paste.language === "markdown") { %>
+    <div id="markdown">
+      
+    </div>
+    <% } %>
   </div>
 </div>
+
 <script src="/js/paste.js"></script>
+<% if(paste.language === "markdown") { %>
+<script src="/js/markdown-paste.js"></script>
+<% } %>
