@@ -27,9 +27,8 @@ async function main() {
   });
 }
 
-app.get("/new", (req, res) => {
-  res.render("pages/new");
-});
+app.get("/", (req, res) => res.render("pages/index"));
+app.get("/new", (req, res) => res.render("pages/new"));
 app.post("/new", pastes.new);
 app.get("/:action?/:pasteId", pastes.retrieve);
 app.post("/:action?/:pasteId", pastes.retrieve);

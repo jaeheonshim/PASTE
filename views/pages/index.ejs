@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <%- include("../partials/head"); %>
+  <title>PASTE</title>
+</head>
+
+<body>
+  <%- include("../partials/header") %>
+  <div class="container-fluid">
+    <div class="row gx-2">
+      <div class="col-8">
+        <div class="card bg-dark m-3 mx-auto">
+          <div class="card-body">
+            <h2 class="h3 card-title">Create a new paste</h2>
+            <%- include("../partials/new-form") %>
+          </div>
+        </div>
+      </div>
+      <div class="col-4">
+        <div class="card m-3">
+          <div class="card-body">
+            <h1 class="h3 card-title">Welcome to PASTE!</h5>
+              <p>
+                <strong>PASTE</strong> (Pretty Awesome Snippets of Text with Encryption) is a free, open-source text sharing tool. While built to primarily share snippets of code, it can be used to share any form of text with the whole world.
+              </p>
+              <p>
+                  While simple on the surface, PASTE supports some neat features. Here are a few:
+                  <ul>
+                      <li>Up to 8MB in content</li>
+                      <li>Sharing in raw, JSON, or downloadable form</li>
+                      <li>Password protected pastes</li>
+                      <li>AES-256 encrypted pastes</li>
+                      <li>Pastes with expiration</li>
+                      <li>Syntax highlighting</li>
+                      <li>Fully fledged markdown support</li>
+                  </ul>
+              </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <%- include("../partials/footer") %>
+</body>
+
+</html>

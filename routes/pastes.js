@@ -1,5 +1,6 @@
 const AES = require("crypto-js/aes");
 const CryptoJS = require("crypto-js");
+const hljs = require('highlight.js');
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
 
@@ -71,6 +72,7 @@ exports.new = async (req, res) => {
     const body = req.body;
     const name = body.name;
     const content = body.content;
+    const language = body.language;
     const expiration = body.expiration;
 
     const security = body.security;
@@ -82,6 +84,7 @@ exports.new = async (req, res) => {
     const newPaste = new Paste({
         name: name,
         content: content,
+        language: language,
         meta: {
             creation_ip: IPADDR
         }

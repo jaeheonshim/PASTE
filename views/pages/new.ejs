@@ -2,13 +2,21 @@
 <html lang="en">
 
 <head>
-    <%- include("../partials/head"); %>
-    <title>New Paste</title>
+  <%- include("../partials/head"); %>
+  <title>New Paste</title>
 </head>
 
 <body>
-    <%- include("../partials/header") %>
-    <%- include("../partials/new-form") %>
-    <%- include("../partials/footer") %>
+  <%- include("../partials/header") %>
+  <div class="container-fluid">
+    <div class="card bg-dark m-3 mx-auto">
+      <div class="card-body">
+        <h1 class="h3 card-title">Create a new paste</h1>
+        <%- include("../partials/new-form") %>
+      </div>
+    </div>
+  </div>
+  <%- include("../partials/footer") %>
 </body>
+
 </html>

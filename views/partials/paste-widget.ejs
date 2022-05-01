@@ -9,6 +9,11 @@
         <a href="/dl/<%=paste.id%>" class="btn btn-dark btn-sm">DOWNLOAD</a>
       </div>
       <div class="col text-end">
+        <% if(paste.language && paste.language != "txt") { %>
+          <span class="badge bg-primary">
+            <%= paste.language %>
+          </span>
+        <% } %>
         <% if(paste.security.type != null) { %>
         <span class="badge bg-success" data-bs-toggle="tooltip" data-bs-placement="top" title="Password protected">
           <i class="fa fa-solid fa-lock"></i>
@@ -36,7 +41,7 @@
         <% } %>
       </div>
     </div>
-    <textarea class="form-control" style="resize: none;" readonly><%- paste.content %></textarea>
+    <pre><code class='language-<%= paste.language %>' style="resize: none;" readonly><%= paste.content %></code></pre>
   </div>
 </div>
 <script src="/js/paste.js"></script>

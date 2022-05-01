@@ -16,6 +16,10 @@ const pasteSchema = new mongoose.Schema({
         hmac: {type: String, select: false},
         passphrase: {type: String, select: false}
     },
+    language: {
+        type: String,
+        default: "txt"
+    },
     meta: {
         creation_ip: {type: String, select: false}
     },
