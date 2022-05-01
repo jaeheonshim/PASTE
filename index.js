@@ -27,7 +27,11 @@ async function main() {
   });
 }
 
-app.get("/", (req, res) => res.render("pages/index"));
+app.get("/", async (req, res) => {
+  const pasteCount = await Paste.estimatedDocumentCount({});
+
+  res.render("pages/index", {pasteCount: pasteCount});
+});
 app.get("/new", (req, res) => res.render("pages/new"));
 app.post("/new", pastes.new);
 app.get("/:action?/:pasteId", pastes.retrieve);
