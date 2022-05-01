@@ -1,3 +1,5 @@
+const stripJs = require("strip-js");
+const xss = require("xss");
 const AES = require("crypto-js/aes");
 const CryptoJS = require("crypto-js");
 const hljs = require('highlight.js');
@@ -52,7 +54,7 @@ exports.retrieve = async (req, res, next) => {
         }
 
         if (action === "raw") {
-            res.send(paste.content);
+            res.send(xss(paste.content));
         } else if (action == "dl") {
             res.attachment(`${pasteId}.txt`);
             res.type("txt");
@@ -61,7 +63,7 @@ exports.retrieve = async (req, res, next) => {
             res.type("json");
             res.send(paste);
         } else {
-            res.render("pages/paste", {paste: paste, base64: Buffer.from(paste.content).toString("base64")});
+            res.render("pages/paste", {paste: paste, base64: Buffer.from(xss(paste.content)).toString("base64")});
         }
     } else {
         res.status(404).render("pages/404");
@@ -70,13 +72,13 @@ exports.retrieve = async (req, res, next) => {
 
 exports.new = async (req, res) => {
     const body = req.body;
-    const name = body.name;
+    const name = stripJs(body.name);
     const content = body.content;
-    const language = body.language;
-    const expiration = body.expiration;
+    const language = stripJs(body.language);
+    const expiration = stripJs(body.expiration);
 
-    const security = body.security;
-    const passphrase = body.passphrase;
+    const security = stripJs(body.security);
+    const passphrase = stripJs(body.passphrase);
     const aes = body.AES;
 
     const IPADDR = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
