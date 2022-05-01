@@ -7,14 +7,14 @@ const idgen = require("../util/idgen");
 
 const Paste = require("../model/Paste");
 
-exports.retrieve = async (req, res) => {
+exports.retrieve = async (req, res, next) => {
     const pasteId = req.params.pasteId;
     const action = req.params.action;
     const paste = await Paste.findById(pasteId).exec();
 
     if (paste != null) {
         if(paste.isExpired()) {
-            res.status(404).send("404: Not found");
+            res.status(404).render("pages/404");
             await Paste.deleteOne({_id: pasteId});
             return;
         }
@@ -63,7 +63,7 @@ exports.retrieve = async (req, res) => {
             res.render("pages/paste", {paste: paste});
         }
     } else {
-        res.status(404).send("404: Not found");
+        res.status(404).render("pages/404");
     }
 };
 
