@@ -54,6 +54,7 @@ exports.retrieve = async (req, res, next) => {
         }
 
         if (action === "raw") {
+            res.type("text/plain");
             res.send(xss(paste.content));
         } else if (action == "dl") {
             res.attachment(`${pasteId}.txt`);
