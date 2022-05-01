@@ -77,9 +77,14 @@ exports.new = async (req, res) => {
     const passphrase = body.passphrase;
     const aes = body.AES;
 
+    const IPADDR = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
+
     const newPaste = new Paste({
         name: name,
-        content: content
+        content: content,
+        meta: {
+            creation_ip: IPADDR
+        }
     });
 
     const error = newPaste.validateSync();

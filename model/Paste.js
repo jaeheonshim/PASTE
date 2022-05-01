@@ -16,6 +16,9 @@ const pasteSchema = new mongoose.Schema({
         hmac: {type: String, select: false},
         passphrase: {type: String, select: false}
     },
+    meta: {
+        creation_ip: {type: String, select: false}
+    },
     expiration: Date
 }, { timestamps: true });
 
