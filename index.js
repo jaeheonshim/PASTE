@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const compression = require("compression");
 const express = require('express');
 const bodyParser = require('body-parser');
 const CryptoJS = require("crypto-js");
@@ -14,6 +15,7 @@ const app = express();
 app.use(express.static('public'))
 app.use(express.json({limit: '16mb'}));
 app.use(bodyParser.urlencoded({ extended: true, limit: '16mb'}));
+app.use(compression());
 
 app.set('views', './views');
 app.set('view engine', 'ejs');
@@ -23,7 +25,7 @@ main().catch(err => console.error(err));
 async function main() {
   await mongoose.connect("mongodb://localhost:27017/paste");
   app.listen(port, () => {
-    console.log(`Example app listening on port ${port}`)
+    console.log(`PASTE app listening on port ${port}`)
   });
 }
 
