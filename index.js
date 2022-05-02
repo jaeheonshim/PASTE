@@ -8,7 +8,7 @@ const pastes = require("./routes/pastes");
 
 const Paste = require("./model/Paste");
 
-const port = 3000;
+const port = process.env.PORT || 3000;
 
 const app = express();
 
@@ -23,7 +23,7 @@ app.set('view engine', 'ejs');
 main().catch(err => console.error(err));
 
 async function main() {
-  await mongoose.connect("mongodb://localhost:27017/paste");
+  await mongoose.connect(process.env.DATABASE_URL);
   app.listen(port, () => {
     console.log(`PASTE app listening on port ${port}`)
   });
