@@ -4,6 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start": "node index.js",
+    "start_windows": "set DATABASE_URL=mongodb://localhost:27017/paste&&node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
