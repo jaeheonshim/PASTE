@@ -52,11 +52,11 @@
       </div>
     </div>
     <div id="content">
-      <pre><code class='language-<%= paste.language %>' style="resize: none;" readonly><%= paste.content %></code></pre>
+      <pre class="wrap"><code class='language-<%= paste.language %>' style="resize: none;" readonly><%= paste.content %></code></pre>
     </div>
 
     <% if(paste.language === "markdown") { %>
-    <div id="markdown">
+    <div class="wrap" id="markdown">
 
     </div>
     <% } %>

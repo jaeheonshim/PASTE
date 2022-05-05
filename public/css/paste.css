@@ -1,3 +1,7 @@
 blockquote:not([class]) {
     margin: 1em 40px;
 }
+
+.wrap {
+    white-space: pre-wrap;
+}
