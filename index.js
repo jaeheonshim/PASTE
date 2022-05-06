@@ -12,12 +12,12 @@ const port = process.env.PORT || 3000;
 
 const app = express();
 
-app.use(express.static('public'))
+app.use(express.static(__dirname + '/public'))
 app.use(express.json({limit: '16mb'}));
 app.use(bodyParser.urlencoded({ extended: true, limit: '16mb'}));
 app.use(compression());
 
-app.set('views', './views');
+app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
 
 main().catch(err => console.error(err));
